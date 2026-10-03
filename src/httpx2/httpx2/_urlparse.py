@@ -45,9 +45,9 @@ FRAG_SAFE = "".join([chr(i) for i in range(0x20, 0x7F) if i not in (0x20, 0x22, 
 QUERY_SAFE = "".join([chr(i) for i in range(0x20, 0x7F) if i not in (0x20, 0x22, 0x23, 0x3C, 0x3E)])
 
 # The path percent-encode set is the query percent-encode set
-# and U+003F (?), U+0060 (`), U+007B ({), and U+007D (}).
+# and U+003F (?), U+0060 (`), U+007B ({), U+007C (|), and U+007D (}).
 PATH_SAFE = "".join(
-    [chr(i) for i in range(0x20, 0x7F) if i not in (0x20, 0x22, 0x23, 0x3C, 0x3E) + (0x3F, 0x60, 0x7B, 0x7D)]
+    [chr(i) for i in range(0x20, 0x7F) if i not in (0x20, 0x22, 0x23, 0x3C, 0x3E) + (0x3F, 0x60, 0x7B, 0x7C, 0x7D)]
 )
 
 # The userinfo percent-encode set is the path percent-encode set
