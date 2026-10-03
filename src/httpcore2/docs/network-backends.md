@@ -100,9 +100,10 @@ asyncio.run(main())
 For example, a subclass can override `connect_tcp()` to choose a different
 socket destination, then pass the replacement host and port to
 `super().connect_tcp()` for the connection.
-The original request hostname still controls the HTTP `Host` header and the
-default TLS server name, unless you explicitly override `sni_hostname` in the
-request extensions. Validate any destination mapping in your application.
+The request URL supplies the default HTTP `Host` header and TLS server name.
+Passing a `Host` header overrides the former; the `sni_hostname` request
+extension overrides the latter. Validate any destination mapping in your
+application.
 
 The `httpcore2.AnyIOBackend` is suitable for usage if you're running under `asyncio`. This is a networking backend implemented using [the `anyio` package](https://anyio.readthedocs.io/en/3.x/).
 
