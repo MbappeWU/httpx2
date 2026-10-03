@@ -533,10 +533,8 @@ class BaseClient:
                 # away from the origin. (Except for direct HTTP to HTTPS redirects.)
                 headers.pop("Authorization", None)
 
-            # Update the Host header unless it was explicitly provided.
-            default_host = _url_to_host_header(request.url).decode("ascii")
-            if "Host" not in headers or headers["Host"] == default_host:
-                headers["Host"] = _url_to_host_header(url).decode("ascii")
+            # Update the Host header.
+            headers["Host"] = _url_to_host_header(url).decode("ascii")
 
         if method != request.method and method == "GET":
             # If we've switch to a 'GET' request, then strip any headers which

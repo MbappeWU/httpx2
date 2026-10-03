@@ -256,14 +256,24 @@ def test_explicit_host_header_is_preserved_for_scoped_ipv6_url() -> None:
     assert request.headers["Host"] == "example.org"
 
 
-def test_explicit_host_header_is_preserved_on_redirect() -> None:
+def test_explicit_host_header_is_rewritten_on_cross_origin_redirect() -> None:
     request = httpx2.Request("GET", "https://example.org/", headers={"Host": "custom.example.org"})
     url = httpx2.URL("https://[fe80::1%25eth0]/")
 
     client = httpx2.Client()
     headers = client._redirect_headers(request, url, "GET")
 
-    assert headers["Host"] == "custom.example.org"
+    assert headers["Host"] == "[fe80::1]"
+
+
+def test_explicit_host_header_is_rewritten_to_redirect_target() -> None:
+    request = httpx2.Request("GET", "https://example.org/", headers={"Host": "custom.example.org"})
+    url = httpx2.URL("https://other.example.org/")
+
+    client = httpx2.Client()
+    headers = client._redirect_headers(request, url, "GET")
+
+    assert headers["Host"] == "other.example.org"
 
 
 def test_redirect_host_omits_ipv6_scope_identifier() -> None:
